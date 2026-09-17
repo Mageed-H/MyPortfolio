@@ -1,17 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useSpring, useMotionValue } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
-/** Smooth custom cursor — disabled on coarse pointers / touch. */
+/** Premium cyber cursor with a trailing glow ring. */
 export default function CustomCursor() {
-  const [enabled, setEnabled] = useState(false)
+  const [enabled, setEnabled]   = useState(false)
   const [hovering, setHovering] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const raf = useRef(0)
+  const [visible, setVisible]   = useState(false)
 
-  const x = useMotionValue(-100)
-  const y = useMotionValue(-100)
-  const springX = useSpring(x, { stiffness: 400, damping: 32, mass: 0.35 })
-  const springY = useSpring(y, { stiffness: 400, damping: 32, mass: 0.35 })
+  const x = useMotionValue(-200)
+  const y = useMotionValue(-200)
+  const sx = useSpring(x, { stiffness: 480, damping: 34, mass: 0.3 })
+  const sy = useSpring(y, { stiffness: 480, damping: 34, mass: 0.3 })
+
+  // Slower trail ring
+  const rx = useSpring(x, { stiffness: 120, damping: 22, mass: 0.6 })
+  const ry = useSpring(y, { stiffness: 120, damping: 22, mass: 0.6 })
 
   useEffect(() => {
     const fine = window.matchMedia('(pointer: fine)').matches
@@ -20,27 +23,18 @@ export default function CustomCursor() {
 
     document.documentElement.classList.add('has-custom-cursor')
 
-    const onMove = (event: MouseEvent) => {
-      x.set(event.clientX)
-      y.set(event.clientY)
+    const onMove = (e: MouseEvent) => {
+      x.set(e.clientX)
+      y.set(e.clientY)
       setVisible(true)
-
-      const target = event.target as HTMLElement | null
-      const interactive = Boolean(
-        target?.closest(
-          'a, button, [data-cursor="interactive"], [role="button"], input, textarea, select',
-        ),
-      )
-      setHovering(interactive)
+      const t = e.target as HTMLElement | null
+      setHovering(Boolean(t?.closest('a, button, [data-cursor="interactive"], [role="button"], input, textarea, select')))
     }
-
     const onLeave = () => setVisible(false)
 
     window.addEventListener('mousemove', onMove, { passive: true })
     window.addEventListener('mouseleave', onLeave)
-
     return () => {
-      cancelAnimationFrame(raf.current)
       document.documentElement.classList.remove('has-custom-cursor')
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseleave', onLeave)
@@ -50,20 +44,43 @@ export default function CustomCursor() {
   if (!enabled) return null
 
   return (
-    <motion.div
-      aria-hidden
-      className="pointer-events-none fixed top-0 left-0 z-[100] mix-blend-difference"
-      style={{ x: springX, y: springY, translateX: '-50%', translateY: '-50%' }}
-    >
+    <>
+      {/* Outer slow ring — glow on hover */}
       <motion.div
-        className="rounded-full bg-white"
-        animate={{
-          width: hovering ? 44 : 12,
-          height: hovering ? 44 : 12,
-          opacity: visible ? 1 : 0,
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-[99] rounded-full border"
+        style={{
+          x: rx, y: ry,
+          translateX: '-50%', translateY: '-50%',
         }}
-        transition={{ type: 'spring', stiffness: 320, damping: 24 }}
+        animate={{
+          width:   hovering ? 48 : 32,
+          height:  hovering ? 48 : 32,
+          opacity: visible  ?  1 :  0,
+          borderColor: hovering
+            ? 'rgba(6,182,212,0.9)'
+            : 'rgba(6,182,212,0.45)',
+          boxShadow: hovering
+            ? '0 0 16px rgba(6,182,212,0.6), inset 0 0 8px rgba(6,182,212,0.2)'
+            : '0 0 6px rgba(6,182,212,0.25)',
+        }}
+        transition={{ type: 'spring', stiffness: 200, damping: 22 }}
       />
-    </motion.div>
+
+      {/* Inner fast dot */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-[100] rounded-full"
+        style={{ x: sx, y: sy, translateX: '-50%', translateY: '-50%' }}
+        animate={{
+          width:           hovering ? 6 : 6,
+          height:          hovering ? 6 : 6,
+          opacity:         visible ? 1 : 0,
+          backgroundColor: hovering ? '#22d3ee' : '#fff',
+          boxShadow:       hovering ? '0 0 12px #22d3ee' : '0 0 4px rgba(255,255,255,0.6)',
+        }}
+        transition={{ type: 'spring', stiffness: 500, damping: 28 }}
+      />
+    </>
   )
 }
