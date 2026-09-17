@@ -1,10 +1,8 @@
 import { Canvas } from '@react-three/fiber'
-import { Scroll, ScrollControls } from '@react-three/drei'
 import { Suspense } from 'react'
 import ScrollObject from './ScrollObject'
-import PageContent from './PageContent'
 
-/** Full-viewport fixed canvas with scroll-linked 3D background. */
+/** Fixed 3D background canvas — subtle particle field only. */
 export default function ScrollCanvas() {
   return (
     <div className="fixed inset-0 z-0 h-full w-full">
@@ -20,13 +18,7 @@ export default function ScrollCanvas() {
         style={{ touchAction: 'none' }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.6} />
-          <ScrollControls pages={4} damping={0.18} maxSpeed={0.35}>
-            <ScrollObject />
-            <Scroll html style={{ width: '100%' }}>
-              <PageContent />
-            </Scroll>
-          </ScrollControls>
+          <ScrollObject />
         </Suspense>
       </Canvas>
     </div>

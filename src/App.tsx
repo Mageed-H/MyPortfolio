@@ -2,20 +2,22 @@ import { lazy, Suspense } from 'react'
 import AnimatedBackground from './components/AnimatedBackground'
 import CustomCursor from './components/CustomCursor'
 import Navbar from './components/Navbar'
+import ScrollCanvas from './components/ScrollCanvas'
 import { ThemeProvider } from './context/ThemeContext'
 
-const ScrollCanvas = lazy(() => import('./components/ScrollCanvas'))
+const PageContent = lazy(() => import('./components/PageContent'))
 
 export default function App() {
   return (
     <ThemeProvider>
-      <div className="relative h-svh overflow-hidden text-ink">
+      <div className="relative min-h-screen text-ink">
+        <ScrollCanvas />
         <AnimatedBackground />
-        <CustomCursor />
         <Navbar />
         <Suspense fallback={null}>
-          <ScrollCanvas />
+          <PageContent />
         </Suspense>
+        <CustomCursor />
       </div>
     </ThemeProvider>
   )
