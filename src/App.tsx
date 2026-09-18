@@ -6,6 +6,7 @@ import CursorTrail from './components/CursorTrail'
 import Navbar from './components/Navbar'
 import ScrollCanvas from './components/ScrollCanvas'
 import LoadingScreen from './components/LoadingScreen'
+import SectionSidebar from './components/SectionSidebar'
 import { ThemeProvider } from './context/ThemeContext'
 
 const PageContent = lazy(() => import('./components/PageContent'))
@@ -26,6 +27,7 @@ export default function App() {
         className="relative min-h-screen text-ink"
         style={{ visibility: loading ? 'hidden' : 'visible' }}
       >
+        <SectionSidebar />
         <ScrollCanvas />
         <AnimatedBackground />
         <Navbar />
