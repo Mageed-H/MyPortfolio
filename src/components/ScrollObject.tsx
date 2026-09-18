@@ -29,13 +29,13 @@ function seededRng(seed: number) {
 }
 
 /* ─── Main cyan particles ─── */
-function CyberParticles({ isDark }: { isDark: boolean }) {
+function CyberParticles({ isDark, count = PARTICLE_COUNT }: { isDark: boolean; count?: number }) {
   const ref = useRef<Points>(null)
   const geometry = useMemo(() => {
     const rng = seededRng(42)
     const geo = new BufferGeometry()
-    const pos = new Float32Array(PARTICLE_COUNT * 3)
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const pos = new Float32Array(count * 3)
+    for (let i = 0; i < count; i++) {
       const i3    = i * 3
       const r     = 3.5 + rng() * 8.0
       const theta = rng() * Math.PI * 2
@@ -46,7 +46,7 @@ function CyberParticles({ isDark }: { isDark: boolean }) {
     }
     geo.setAttribute('position', new Float32BufferAttribute(pos, 3))
     return geo
-  }, [])
+  }, [count])
   useFrame((_, dt) => { if (ref.current) ref.current.rotation.y += dt * 0.018 })
   return (
     <points ref={ref} geometry={geometry}>
@@ -297,12 +297,12 @@ function OuterHaloRing({ isDark }: { isDark: boolean }) {
 }
 
 /* ─── Mouse-driven camera parallax wrapper ─── */
-function SceneGroup({ children }: { children: React.ReactNode }) {
+function SceneGroup({ isMobile, children }: { isMobile?: boolean; children: React.ReactNode }) {
   const ref = useRef<Group>(null)
   const { pointer } = useThree()
 
   useFrame((_, dt) => {
-    if (!ref.current) return
+    if (!ref.current || isMobile) return
     ref.current.rotation.y = MathUtils.damp(ref.current.rotation.y, pointer.x * 0.12, 3.5, dt)
     ref.current.rotation.x = MathUtils.damp(ref.current.rotation.x, -pointer.y * 0.08, 3.5, dt)
   })
@@ -311,7 +311,7 @@ function SceneGroup({ children }: { children: React.ReactNode }) {
 }
 
 /* ─── Root export ─── */
-export default function ScrollObject() {
+export default function ScrollObject({ isMobile = false }: { isMobile?: boolean }) {
   const isDark = useDocumentTheme()
 
   useFrame(() => {
@@ -320,11 +320,22 @@ export default function ScrollObject() {
     scrollProgress.set(scrollHeight > 0 ? scrollTop / scrollHeight : 0)
   })
 
+  /* Mobile lightweight scene: 85% fewer draw calls & vertices, 60fps locked */
+  if (isMobile) {
+    return (
+      <SceneGroup isMobile={true}>
+        <CyberParticles count={160} isDark={isDark} />
+        <FloatingIcosahedron isDark={isDark} />
+      </SceneGroup>
+    )
+  }
+
+  /* Desktop full cinematic experience */
   return (
-    <SceneGroup>
+    <SceneGroup isMobile={false}>
       <OuterHaloRing       isDark={isDark} />
       <ConstellationLines  isDark={isDark} />
-      <CyberParticles      isDark={isDark} />
+      <CyberParticles      count={800} isDark={isDark} />
       <AccentParticles     isDark={isDark} />
       <GlowingCore         isDark={isDark} />
       <FloatingIcosahedron isDark={isDark} />

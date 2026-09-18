@@ -18,6 +18,7 @@ export default function SectionSidebar() {
 
   useEffect(() => {
     const detect = () => {
+      if (window.innerWidth < 1280) return
       const vh = window.innerHeight
       let best: string = SECTIONS[0].id
       let bestScore = -Infinity
