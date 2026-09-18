@@ -2,18 +2,21 @@ import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { glassPanel } from '../lib/glass'
 import { soundManager } from '../lib/sound'
+import { useLanguage } from '../context/LanguageContext'
 import SoundToggle from './SoundToggle'
-
-const navLinks = [
-  { href: '#home',     label: 'Home'     },
-  { href: '#tech',     label: 'Tech'     },
-  { href: '#projects', label: 'Projects' },
-  { href: '#contact',  label: 'Contact'  },
-]
+import LanguageToggle from './LanguageToggle'
 
 export default function Navbar() {
-  const [open,     setOpen    ] = useState(false)
+  const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { href: '#home',     label: t.nav.home     },
+    { href: '#tech',     label: t.nav.tech     },
+    { href: '#projects', label: t.nav.projects },
+    { href: '#contact',  label: t.nav.contact  },
+  ]
 
   useEffect(() => {
     let last = false
@@ -59,16 +62,19 @@ export default function Navbar() {
               data-cursor="interactive"
               onClick={() => soundManager.playNav()}
               onMouseEnter={() => soundManager.playHover()}
-              className="text-sm text-muted transition hover:text-accent font-mono tracking-wider"
+              className="text-sm text-muted transition hover:text-accent font-medium tracking-wider"
             >
               {link.label}
             </a>
           ))}
+          <div className="h-4 w-px bg-white/10" aria-hidden />
+          <LanguageToggle />
           <SoundToggle />
         </nav>
 
         {/* Mobile controls */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-2.5 md:hidden">
+          <LanguageToggle />
           <SoundToggle />
           <button
             type="button"
@@ -99,7 +105,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   data-cursor="interactive"
-                  className="block py-1 text-sm text-muted hover:text-accent font-mono"
+                  className="block py-1 text-sm text-muted hover:text-accent font-medium"
                   onClick={() => {
                     soundManager.playNav()
                     setOpen(false)

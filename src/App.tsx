@@ -10,6 +10,7 @@ import SectionSidebar from './components/SectionSidebar'
 import HudOverlay from './components/HudOverlay'
 import LaserScrollLine from './components/LaserScrollLine'
 import { ThemeProvider } from './context/ThemeContext'
+import { LanguageProvider } from './context/LanguageContext'
 
 const PageContent = lazy(() => import('./components/PageContent'))
 
@@ -18,7 +19,8 @@ export default function App() {
   const handleDone = useCallback(() => setLoading(false), [])
 
   return (
-    <ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
       {/* Boot loader — unmounts cleanly after exit animation */}
       <AnimatePresence>
         {loading && <LoadingScreen key="loader" onDone={handleDone} />}
@@ -41,6 +43,7 @@ export default function App() {
         <CustomCursor />
         <CursorTrail />
       </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </LanguageProvider>
   )
 }

@@ -4,6 +4,7 @@ import { X, ExternalLink, Cpu, CheckCircle2, Layers } from 'lucide-react'
 import type { Project } from '../data/projects'
 import { glassCard, glassChip } from '../lib/glass'
 import { soundManager } from '../lib/sound'
+import { useLanguage } from '../context/LanguageContext'
 
 function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -20,6 +21,8 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
+  const { t } = useLanguage()
+
   // ESC key listener & body scroll lock
   useEffect(() => {
     if (!project) return
@@ -78,7 +81,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <div className="mb-2 flex items-center gap-2 text-cyan-400">
                 <Cpu className="h-4 w-4" />
                 <span className="font-mono text-xs font-semibold tracking-[0.24em] uppercase">
-                  Architecture Deep-Dive
+                  {t.projects.modal.deepDive}
                 </span>
               </div>
               <h3 className="font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
@@ -112,7 +115,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div>
               <div className="mb-3 flex items-center gap-2 text-xs font-mono font-semibold text-cyan-400/90 uppercase tracking-wider">
                 <Layers className="h-3.5 w-3.5" />
-                <span>System Architecture Flow</span>
+                <span>{t.projects.modal.architectureFlow}</span>
               </div>
               <div className="space-y-2 font-mono text-xs">
                 {project.architecture.map((step, idx) => (
@@ -133,7 +136,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div>
               <div className="mb-3 flex items-center gap-2 text-xs font-mono font-semibold text-emerald-400/90 uppercase tracking-wider">
                 <CheckCircle2 className="h-3.5 w-3.5" />
-                <span>Engineering Highlights</span>
+                <span>{t.projects.modal.highlights}</span>
               </div>
               <ul className="space-y-2 text-xs text-muted">
                 {project.highlights.map((highlight, idx) => (
@@ -148,7 +151,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             {/* Technologies */}
             <div>
               <p className="mb-2 font-mono text-xs text-muted uppercase tracking-wider">
-                Technology Stack:
+                {t.projects.modal.techStack}
               </p>
               <div className="flex flex-wrap gap-2">
                 {project.stack.map((item) => (
@@ -166,7 +169,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Footer Actions */}
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
             <span className="font-mono text-[10px] text-muted tracking-widest uppercase">
-              STATUS: PRODUCTION_READY
+              {t.projects.modal.status}
             </span>
 
             <div className="flex items-center gap-3">
@@ -181,7 +184,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-xs font-mono font-semibold text-ink transition hover:border-cyan-400/40 hover:bg-cyan-500/10"
                 >
                   <GithubIcon className="h-3.5 w-3.5" />
-                  Source Code
+                  {t.projects.modal.sourceCode}
                   <ExternalLink className="h-3 w-3" />
                 </a>
               )}
@@ -196,7 +199,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 onMouseEnter={() => soundManager.playHover()}
                 className="rounded-xl bg-cyan-500 px-4 py-2 text-xs font-mono font-semibold text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] transition hover:bg-cyan-400"
               >
-                Close View [ESC]
+                {t.projects.modal.close}
               </button>
             </div>
           </div>

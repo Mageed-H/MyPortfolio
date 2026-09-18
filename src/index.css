@@ -57,3 +57,9 @@ body {
     cursor: none !important;
   }
 }
+
+html[dir="rtl"] body,
+html[dir="rtl"] .font-display,
+html[dir="rtl"] .font-sans {
+  font-family: 'Cairo', 'DM Sans', sans-serif;
+}

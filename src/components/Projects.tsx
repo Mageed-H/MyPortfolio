@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 import { FolderKanban, ArrowLeft, ArrowRight } from 'lucide-react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { projects, type Project } from '../data/projects'
+import { useLanguage } from '../context/LanguageContext'
 import ProjectCard from './ProjectCard'
 import ProjectModal from './ProjectModal'
 
 const ease = [0.22, 1, 0.36, 1] as const
 
 export default function Projects() {
+  const { t } = useLanguage()
   const [isMobile, setIsMobile] = useState(false)
   const [activeProject, setActiveProject] = useState<Project | null>(null)
   const sectionRef = useRef<HTMLElement>(null)
@@ -31,6 +33,19 @@ export default function Projects() {
   const x = useTransform(scrollYProgress, [0.1, 0.9], [0, totalSlide])
   const barWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
 
+  // Helper to get localized project data
+  const getLocalizedProject = (p: Project): Project => {
+    const localized = t.projects.items[p.id as keyof typeof t.projects.items]
+    if (!localized) return p
+    return {
+      ...p,
+      title: localized.title,
+      description: localized.description,
+      architecture: [...localized.architecture],
+      highlights: [...localized.highlights],
+    }
+  }
+
   /* On mobile: standard vertical layout for buttery-smooth native 60fps scrolling */
   if (isMobile) {
     return (
@@ -47,25 +62,28 @@ export default function Projects() {
           <div className="mb-8 max-w-2xl">
             <div className="mb-3 flex items-center gap-2 text-accent">
               <FolderKanban className="h-4 w-4" aria-hidden />
-              <p className="text-sm font-medium tracking-[0.24em] uppercase">Projects</p>
+              <p className="text-sm font-medium tracking-[0.24em] uppercase">{t.projects.badge}</p>
             </div>
             <h2 className="font-display text-3xl font-bold tracking-tight text-ink">
-              Selected work
+              {t.projects.heading}
             </h2>
             <p className="mt-2 text-sm text-muted">
-              A couple of builds that connect product UX with solid backend and data foundations.
+              {t.projects.subtitle}
             </p>
           </div>
 
           <div className="flex flex-col gap-6">
-            {projects.map((project, i) => (
-              <div key={project.id} className="w-full">
-                <p className="mb-2 font-mono text-[11px] font-bold tracking-[0.3em] text-cyan-500/50 uppercase">
-                  {String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-                </p>
-                <ProjectCard project={project} onSelect={() => setActiveProject(project)} />
-              </div>
-            ))}
+            {projects.map((rawProject, i) => {
+              const project = getLocalizedProject(rawProject)
+              return (
+                <div key={project.id} className="w-full">
+                  <p className="mb-2 font-mono text-[11px] font-bold tracking-[0.3em] text-cyan-500/50 uppercase">
+                    {String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+                  </p>
+                  <ProjectCard project={project} onSelect={() => setActiveProject(project)} />
+                </div>
+              )
+            })}
           </div>
         </div>
 
@@ -102,20 +120,20 @@ export default function Projects() {
         >
           <div className="mb-3 flex items-center gap-2 text-accent">
             <FolderKanban className="h-4 w-4" aria-hidden />
-            <p className="text-sm font-medium tracking-[0.24em] uppercase">Projects</p>
+            <p className="text-sm font-medium tracking-[0.24em] uppercase">{t.projects.badge}</p>
           </div>
           <div className="flex items-end justify-between gap-4">
             <div>
               <h2 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-                Selected work
+                {t.projects.heading}
               </h2>
               <p className="mt-2 text-muted">
-                A couple of builds that connect product UX with solid backend and data foundations.
+                {t.projects.subtitle}
               </p>
             </div>
             <div className="hidden items-center gap-2 text-muted/50 md:flex">
               <ArrowLeft className="h-4 w-4" />
-              <span className="font-mono text-[10px] tracking-[0.2em] uppercase">Scroll</span>
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase">{t.projects.scrollHint}</span>
               <ArrowRight className="h-4 w-4" />
             </div>
           </div>
@@ -135,21 +153,24 @@ export default function Projects() {
             style={{ x }}
             transition={{ type: 'spring', stiffness: 60, damping: 18 }}
           >
-            {projects.map((project, i) => (
-              <motion.div
-                key={project.id}
-                className="w-[min(80vw,460px)] flex-shrink-0"
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.55, delay: i * 0.12, ease }}
-              >
-                <p className="mb-3 font-mono text-[11px] font-bold tracking-[0.3em] text-cyan-500/50 uppercase">
-                  {String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-                </p>
-                <ProjectCard project={project} onSelect={() => setActiveProject(project)} />
-              </motion.div>
-            ))}
+            {projects.map((rawProject, i) => {
+              const project = getLocalizedProject(rawProject)
+              return (
+                <motion.div
+                  key={project.id}
+                  className="w-[min(80vw,460px)] flex-shrink-0"
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.55, delay: i * 0.12, ease }}
+                >
+                  <p className="mb-3 font-mono text-[11px] font-bold tracking-[0.3em] text-cyan-500/50 uppercase">
+                    {String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+                  </p>
+                  <ProjectCard project={project} onSelect={() => setActiveProject(project)} />
+                </motion.div>
+              )
+            })}
           </motion.div>
         </div>
       </div>

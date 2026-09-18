@@ -12,6 +12,7 @@ import { motion, type Variants } from 'framer-motion'
 import { techStack } from '../data/tech'
 import { glassCard, glassChip } from '../lib/glass'
 import { soundManager } from '../lib/sound'
+import { useLanguage } from '../context/LanguageContext'
 import SpotlightCard from './SpotlightCard'
 
 const iconMap: Record<string, LucideIcon> = {
@@ -43,6 +44,8 @@ const item: Variants = {
 }
 
 export default function TechStack() {
+  const { t } = useLanguage()
+
   return (
     <section
       id="tech"
@@ -66,14 +69,13 @@ export default function TechStack() {
         >
           <div className="mb-3 flex items-center gap-2 text-accent">
             <LayoutGrid className="h-4 w-4" aria-hidden />
-            <p className="text-sm font-medium tracking-[0.24em] uppercase">Tech stack</p>
+            <p className="text-sm font-medium tracking-[0.24em] uppercase">{t.tech.badge}</p>
           </div>
           <h2 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-            Tools I use to ship end-to-end
+            {t.tech.heading}
           </h2>
           <p className="mt-4 text-muted">
-            A focused set of technologies spanning clients, APIs, persistence, and
-            applied machine learning.
+            {t.tech.subtitle}
           </p>
         </motion.div>
 

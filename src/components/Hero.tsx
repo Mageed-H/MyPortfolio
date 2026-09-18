@@ -2,7 +2,7 @@ import { motion, useMotionValue, useSpring, type Variants } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import MagneticButton from './MagneticButton'
-
+import { useLanguage } from '../context/LanguageContext'
 import { glassPanel } from '../lib/glass'
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -22,11 +22,6 @@ const TYPING_LINES = [
   { text: '// Building the future, one commit at a time.', color: 'text-slate-400 dark:text-slate-500'   },
 ] as const
 
-const STATS = [
-  { value: '3+', label: 'Years of Experience' },
-  { value: '15+', label: 'Projects Shipped'   },
-  { value: '5+', label: 'Technologies'        },
-] as const
 
 /* Floating decorative code fragments (behind the main card) */
 const CODE_FRAGMENTS = [
@@ -200,11 +195,19 @@ function StatCard({ value, label, delay }: { value: string; label: string; delay
    Hero Section
    ────────────────────────────────────────────── */
 export default function Hero() {
+  const { t } = useLanguage()
+
   /* Tilt effect on the whole hero */
   const rawX = useMotionValue(0)
   const rawY = useMotionValue(0)
   const tiltX = useSpring(rawX, { stiffness: 80, damping: 20 })
   const tiltY = useSpring(rawY, { stiffness: 80, damping: 20 })
+
+  const stats = [
+    { value: '3+', label: t.hero.stats.experience },
+    { value: '15+', label: t.hero.stats.projects },
+    { value: '5+', label: t.hero.stats.tech },
+  ]
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (window.innerWidth < 1024) return
@@ -269,17 +272,17 @@ export default function Hero() {
             <span className="inline-flex h-5 w-5 items-center justify-center rounded border border-accent/40 bg-accent/10">
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse shadow-[0_0_8px_currentColor]" />
             </span>
-            Software Engineer
+            {t.hero.badge}
           </motion.p>
 
           {/* Gradient heading */}
-          <h1 className="font-display text-4xl leading-[1.05] font-extrabold tracking-tight sm:text-5xl lg:text-[3.4rem]">
+          <h1 className="font-display text-4xl leading-[1.08] font-extrabold tracking-tight sm:text-5xl lg:text-[3.2rem]">
             <span className="bg-gradient-to-br from-slate-900 via-slate-700 to-slate-900
               dark:from-white dark:via-slate-200 dark:to-cyan-200
               bg-clip-text text-transparent
               drop-shadow-[0_2px_24px_rgba(6,182,212,0.18)]
               dark:drop-shadow-[0_2px_28px_rgba(6,182,212,0.32)]">
-              Cross-platform &amp; Backend Development
+              {t.hero.heading}
             </span>
           </h1>
 
@@ -298,8 +301,7 @@ export default function Hero() {
             className="mt-6 text-base leading-relaxed text-muted sm:text-lg"
             variants={fadeUp} initial="hidden" animate="visible" custom={0.45}
           >
-            I design and ship resilient products across mobile, desktop, and APIs —
-            from Flutter clients to FastAPI services, data stores, and ML-backed features.
+            {t.hero.subheading}
           </motion.p>
 
           {/* Skill badges */}
@@ -337,14 +339,14 @@ export default function Hero() {
                 transition-shadow duration-300
               "
             >
-              View projects
+              {t.hero.viewProjects}
             </MagneticButton>
             <MagneticButton
               href="#contact"
               strength={0.25}
               className={`inline-flex items-center justify-center rounded-lg px-6 py-2.5 text-sm font-medium text-ink ${glassPanel} hover:border-cyan-400/40`}
             >
-              Get in touch
+              {t.hero.getInTouch}
             </MagneticButton>
           </motion.div>
 
@@ -353,7 +355,7 @@ export default function Hero() {
             className="mt-10 flex gap-8 border-t border-slate-900/08 dark:border-white/08 pt-6"
             variants={fadeUp} initial="hidden" animate="visible" custom={0.75}
           >
-            {STATS.map((s, i) => (
+            {stats.map((s, i) => (
               <StatCard key={s.label} value={s.value} label={s.label} delay={0.78 + i * 0.12} />
             ))}
           </motion.div>
@@ -385,7 +387,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.6 }}
       >
-        Explore
+        {t.hero.explore}
         <ArrowDown className="h-3.5 w-3.5 animate-bounce" aria-hidden />
       </motion.a>
     </section>
