@@ -2,6 +2,7 @@ import { lazy, Suspense, useState, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import AnimatedBackground from './components/AnimatedBackground'
 import CustomCursor from './components/CustomCursor'
+import CursorTrail from './components/CursorTrail'
 import Navbar from './components/Navbar'
 import ScrollCanvas from './components/ScrollCanvas'
 import LoadingScreen from './components/LoadingScreen'
@@ -32,6 +33,7 @@ export default function App() {
           <PageContent />
         </Suspense>
         <CustomCursor />
+        <CursorTrail />
       </div>
     </ThemeProvider>
   )
