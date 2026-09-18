@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { glassPanel } from '../lib/glass'
-import { scrollProgress } from '../lib/scrollProgress'
 
 const navLinks = [
   { href: '#home',     label: 'Home'     },
@@ -15,12 +14,22 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    return scrollProgress.subscribe((offset) => setScrolled(offset > 0.03))
+    let last = false
+    const onScroll = () => {
+      const isScrolled = window.scrollY > 20
+      if (isScrolled !== last) {
+        last = isScrolled
+        setScrolled(isScrolled)
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition ${
+      className={`fixed inset-x-0 top-0 z-50 border-b transition duration-200 ${
         scrolled
           ? `border-white/10 ${glassPanel}`
           : 'border-transparent bg-transparent'

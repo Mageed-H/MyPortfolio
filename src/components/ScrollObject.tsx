@@ -17,7 +17,6 @@ import {
   Group,
 } from 'three'
 import { useDocumentTheme } from '../hooks/useDocumentTheme'
-import { scrollProgress } from '../lib/scrollProgress'
 
 const PARTICLE_COUNT = 800
 const ACCENT_COUNT   = 300
@@ -314,18 +313,11 @@ function SceneGroup({ isMobile, children }: { isMobile?: boolean; children: Reac
 export default function ScrollObject({ isMobile = false }: { isMobile?: boolean }) {
   const isDark = useDocumentTheme()
 
-  useFrame(() => {
-    const scrollTop    = window.scrollY
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
-    scrollProgress.set(scrollHeight > 0 ? scrollTop / scrollHeight : 0)
-  })
-
-  /* Mobile lightweight scene: 85% fewer draw calls & vertices, 60fps locked */
+  /* Mobile lightweight scene: 70 glowing points, single draw call, ultra smooth */
   if (isMobile) {
     return (
       <SceneGroup isMobile={true}>
-        <CyberParticles count={160} isDark={isDark} />
-        <FloatingIcosahedron isDark={isDark} />
+        <CyberParticles count={70} isDark={isDark} />
       </SceneGroup>
     )
   }
