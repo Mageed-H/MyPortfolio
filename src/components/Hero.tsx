@@ -250,6 +250,14 @@ export default function Hero() {
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0 opacity-[0.018] dark:opacity-[0.03]"
         style={{ backgroundImage: 'linear-gradient(rgba(6,182,212,1) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,1) 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
 
+      {/* Ambient Ghost Watermark Typography */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-16 right-6 lg:right-24 -z-10 select-none font-display text-[12rem] sm:text-[18rem] lg:text-[26rem] font-black leading-none text-white/[0.015] tracking-tighter"
+      >
+        01
+      </div>
+
       <div className="relative z-10 mx-auto grid w-full max-w-6xl flex-1 items-center gap-10 px-6 py-28 lg:grid-cols-2 lg:gap-14">
 
         {/* LEFT */}

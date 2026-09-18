@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { FolderKanban, ArrowLeft, ArrowRight } from 'lucide-react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { projects } from '../data/projects'
+import { projects, type Project } from '../data/projects'
 import ProjectCard from './ProjectCard'
+import ProjectModal from './ProjectModal'
 
 const ease = [0.22, 1, 0.36, 1] as const
 
 export default function Projects() {
   const [isMobile, setIsMobile] = useState(false)
+  const [activeProject, setActiveProject] = useState<Project | null>(null)
   const sectionRef = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
 
@@ -32,7 +34,15 @@ export default function Projects() {
   /* On mobile: standard vertical layout for buttery-smooth native 60fps scrolling */
   if (isMobile) {
     return (
-      <section id="projects" className="relative border-b border-white/10 px-6 py-20">
+      <section id="projects" className="relative border-b border-white/10 px-6 py-20 overflow-hidden">
+        {/* Ambient Ghost Watermark Typography */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-8 right-2 -z-10 select-none font-display text-[11rem] font-black leading-none text-white/[0.018] tracking-tighter"
+        >
+          03
+        </div>
+
         <div className="mx-auto max-w-6xl">
           <div className="mb-8 max-w-2xl">
             <div className="mb-3 flex items-center gap-2 text-accent">
@@ -53,11 +63,14 @@ export default function Projects() {
                 <p className="mb-2 font-mono text-[11px] font-bold tracking-[0.3em] text-cyan-500/50 uppercase">
                   {String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
                 </p>
-                <ProjectCard project={project} />
+                <ProjectCard project={project} onSelect={() => setActiveProject(project)} />
               </div>
             ))}
           </div>
         </div>
+
+        {/* Deep-Dive Modal */}
+        <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
       </section>
     )
   }
@@ -67,10 +80,18 @@ export default function Projects() {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative border-b border-white/10"
+      className="relative border-b border-white/10 overflow-hidden"
       style={{ height: `${(projects.length + 1) * 100}vh` }}
     >
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden py-20">
+        {/* Ambient Ghost Watermark Typography */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute top-1/2 right-12 -translate-y-1/2 -z-10 select-none font-display text-[22rem] lg:text-[28rem] font-black leading-none text-white/[0.018] tracking-tighter"
+        >
+          03
+        </div>
+
         {/* Header */}
         <motion.div
           className="mx-auto mb-10 w-full max-w-6xl px-6"
@@ -126,12 +147,15 @@ export default function Projects() {
                 <p className="mb-3 font-mono text-[11px] font-bold tracking-[0.3em] text-cyan-500/50 uppercase">
                   {String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
                 </p>
-                <ProjectCard project={project} />
+                <ProjectCard project={project} onSelect={() => setActiveProject(project)} />
               </motion.div>
             ))}
           </motion.div>
         </div>
       </div>
+
+      {/* Deep-Dive Modal */}
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </section>
   )
 }

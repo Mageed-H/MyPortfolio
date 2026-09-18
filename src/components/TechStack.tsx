@@ -46,8 +46,16 @@ export default function TechStack() {
   return (
     <section
       id="tech"
-      className="relative min-h-[100svh] border-b border-slate-900/10 py-20 dark:border-white/10 sm:py-28"
+      className="relative min-h-[100svh] border-b border-slate-900/10 py-20 dark:border-white/10 sm:py-28 overflow-hidden"
     >
+      {/* Ambient Ghost Watermark Typography */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-8 right-6 lg:right-20 -z-10 select-none font-display text-[12rem] sm:text-[18rem] lg:text-[24rem] font-black leading-none text-white/[0.015] tracking-tighter"
+      >
+        02
+      </div>
+
       <div className="relative mx-auto max-w-6xl px-6">
         <motion.div
           className="mb-12 max-w-2xl"

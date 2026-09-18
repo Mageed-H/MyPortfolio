@@ -11,7 +11,15 @@ export default function Contact() {
   const year = new Date().getFullYear()
 
   return (
-    <footer id="contact" className="relative min-h-[80svh] py-16 sm:py-24">
+    <footer id="contact" className="relative min-h-[80svh] py-16 sm:py-24 overflow-hidden">
+      {/* Ambient Ghost Watermark Typography */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-8 right-6 lg:right-20 -z-10 select-none font-display text-[12rem] sm:text-[18rem] lg:text-[24rem] font-black leading-none text-white/[0.015] tracking-tighter"
+      >
+        04
+      </div>
+
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="mb-3 text-sm font-medium tracking-[0.24em] text-accent uppercase">

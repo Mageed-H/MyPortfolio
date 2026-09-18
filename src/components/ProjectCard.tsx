@@ -6,9 +6,10 @@ import SpotlightCard from './SpotlightCard'
 
 type ProjectCardProps = {
   project: Project
+  onSelect?: () => void
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, onSelect }: ProjectCardProps) {
   return (
     <SpotlightCard
       whileHover={{
@@ -17,13 +18,21 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       }}
       data-cursor="interactive"
       onMouseEnter={() => soundManager.playHover()}
-      onClick={() => soundManager.playClick()}
-      className={`group h-full p-6 sm:p-7 ${glassCard}`}
+      onClick={() => {
+        soundManager.playClick()
+        onSelect?.()
+      }}
+      className={`group h-full cursor-pointer p-6 sm:p-7 ${glassCard}`}
     >
       <div className="mb-6 flex items-start justify-between gap-4">
-        <h3 className="font-display text-xl font-bold tracking-tight text-ink sm:text-2xl group-hover:text-cyan-300 transition-colors duration-200">
-          {project.title}
-        </h3>
+        <div>
+          <h3 className="font-display text-xl font-bold tracking-tight text-ink sm:text-2xl group-hover:text-cyan-300 transition-colors duration-200">
+            {project.title}
+          </h3>
+          <p className="mt-1 font-mono text-[10px] text-cyan-400/60 uppercase tracking-widest">
+            Click to inspect architecture ↗
+          </p>
+        </div>
         <span
           className={`mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted transition-all duration-300 group-hover:text-cyan-300 group-hover:border-cyan-400/40 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.4)] ${glassChip}`}
         >
@@ -39,7 +48,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {project.stack.map((item) => (
           <li
             key={item}
-            className={`rounded-md px-2.5 py-1 text-xs font-medium text-cyan-300/80 border border-cyan-500/20 bg-cyan-500/5 ${glassChip}`}
+            className={`rounded-md px-2.5 py-1 text-xs font-mono font-medium text-cyan-300/80 border border-cyan-500/20 bg-cyan-500/5 ${glassChip}`}
           >
             {item}
           </li>

@@ -53,15 +53,17 @@
 - **التأثير:** جميل وعملي وسينمائي بأعلى كفاءة رسومية.
 - **الحالة:** تم التنفيذ في مكون LaserScrollLine بنجاح.
 
-### [10] Ghost Watermark Typography (أرقام الأقسام العملاقة الشفافة)
+### [10] Ghost Watermark Typography (أرقام الأقسام العملاقة الشفافة) STATUS: COMPLETED ✅
 - **الوصف:** أرقام ضخمة وشبه شفافة في خلفية كل قسم (`01`, `02`, `03`, `04`) تتمركز خلف المحتوى، مما يمنح الصفحة عمقاً بصرياً وثلاثي الأبعاد للطبقات.
-- **التقنية:** Tailwind Typography with extreme low opacity.
+- **التقنية:** Tailwind Typography with extreme low opacity & zero layout reflow.
 - **التأثير:** يمنح طابع مواقع المعارض العالمية (Awwwards).
+- **الحالة:** تم التنفيذ في جميع أقسام الموقع بنجاح.
 
-### [11] Project Deep-Dive Modal / Drawer (نافذة تفاصيل معمارية المشاريع)
-- **الوصف:** عند النقر على أي بطاقة مشروع، تنفتح نافذة زجاجية داكنة تعرض المعمارية البرمجية للمشروع (System Architecture)، المخططات، والتقنيات بالتفصيل قبل الانتقال إلى الرابط المباشر.
-- **التقنية:** React Portal + Framer Motion Spring Modal.
+### [11] Project Deep-Dive Modal / Drawer (نافذة تفاصيل معمارية المشاريع) STATUS: COMPLETED ✅
+- **الوصف:** عند النقر على أي بطاقة مشروع، تنفتح نافذة زجاجية داكنة تعرض المعمارية البرمجية للمشروع (System Architecture)، المخططات، والتقنيات بالتفصيل وأزرار السورس كود والإغلاق بـ ESC.
+- **التقنية:** React Portal + Framer Motion Spring Modal + Keyboard Listener & Body Lock.
 - **التأثير:** عالي جداً ويثبت الخبرة الهندسية في بناء الـ Backend و Cross-platform.
+- **الحالة:** تم التنفيذ والربط بجميع بطاقات المشاريع بنجاح.
 
 ---
 
