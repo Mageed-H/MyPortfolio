@@ -20,13 +20,13 @@ export default function Navbar() {
 
   return (
     <header
-      className={`pointer-events-none fixed inset-x-0 top-0 z-50 border-b transition ${
+      className={`fixed inset-x-0 top-0 z-50 border-b transition ${
         scrolled
-          ? `pointer-events-auto border-white/10 ${glassPanel}`
+          ? `border-white/10 ${glassPanel}`
           : 'border-transparent bg-transparent'
       }`}
     >
-      <div className={`mx-auto flex h-14 max-w-6xl items-center justify-between px-6 ${scrolled ? '' : 'pointer-events-auto'}`}>
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
         <a
           href="#home"
           data-cursor="interactive"
@@ -70,7 +70,7 @@ export default function Navbar() {
       {open && (
         <nav
           id="mobile-nav"
-          className={`pointer-events-auto border-t border-white/10 px-6 py-4 md:hidden ${glassPanel}`}
+          className={`border-t border-white/10 px-6 py-4 md:hidden ${glassPanel}`}
           aria-label="Mobile"
         >
           <ul className="flex flex-col gap-3">

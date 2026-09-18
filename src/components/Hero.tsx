@@ -2,7 +2,7 @@ import { motion, useMotionValue, useSpring, type Variants } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import MagneticButton from './MagneticButton'
-import GlitchText from './GlitchText'
+
 import { glassPanel } from '../lib/glass'
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -263,18 +263,14 @@ export default function Hero() {
             Software Engineer
           </motion.p>
 
-          {/* Gradient heading with glitch */}
+          {/* Gradient heading */}
           <h1 className="font-display text-4xl leading-[1.05] font-extrabold tracking-tight sm:text-5xl lg:text-[3.4rem]">
             <span className="bg-gradient-to-br from-slate-900 via-slate-700 to-slate-900
               dark:from-white dark:via-slate-200 dark:to-cyan-200
               bg-clip-text text-transparent
               drop-shadow-[0_2px_24px_rgba(6,182,212,0.18)]
               dark:drop-shadow-[0_2px_28px_rgba(6,182,212,0.32)]">
-              <GlitchText
-                text="Cross-platform & Backend Development"
-                interval={6000}
-                iterations={16}
-              />
+              Cross-platform &amp; Backend Development
             </span>
           </h1>
 
