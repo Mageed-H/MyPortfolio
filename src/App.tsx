@@ -8,6 +8,7 @@ import ScrollCanvas from './components/ScrollCanvas'
 import LoadingScreen from './components/LoadingScreen'
 import SectionSidebar from './components/SectionSidebar'
 import HudOverlay from './components/HudOverlay'
+import LaserScrollLine from './components/LaserScrollLine'
 import { ThemeProvider } from './context/ThemeContext'
 
 const PageContent = lazy(() => import('./components/PageContent'))
@@ -32,6 +33,7 @@ export default function App() {
         <HudOverlay />
         <ScrollCanvas />
         <AnimatedBackground />
+        <LaserScrollLine />
         <Navbar />
         <Suspense fallback={null}>
           <PageContent />
