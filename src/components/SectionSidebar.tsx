@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { soundManager } from '../lib/sound'
 
 const SECTIONS = [
   { id: 'home',     label: 'Hero',     num: '01' },
@@ -67,6 +68,8 @@ export default function SectionSidebar() {
             key={id}
             href={`#${id}`}
             data-cursor="interactive"
+            onClick={() => soundManager.playNav()}
+            onMouseEnter={() => soundManager.playHover()}
             className="pointer-events-auto relative flex items-center gap-3 group"
             aria-label={`Go to ${label} section`}
           >

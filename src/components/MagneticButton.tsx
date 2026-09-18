@@ -1,5 +1,6 @@
 import { useCallback, useRef, type ReactNode } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { soundManager } from '../lib/sound'
 
 type MagneticButtonProps = {
   children: ReactNode
@@ -46,6 +47,8 @@ export default function MagneticButton({
       style={{ x: springX, y: springY }}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
+      onMouseEnter={() => soundManager.playHover()}
+      onClick={() => soundManager.playClick()}
       data-cursor="interactive"
       className={className}
     >

@@ -2,6 +2,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import type { Project } from '../data/projects'
 import { glassCard, glassChip } from '../lib/glass'
+import { soundManager } from '../lib/sound'
 
 type ProjectCardProps = {
   project: Project
@@ -15,6 +16,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         transition: { type: 'spring', stiffness: 320, damping: 22 },
       }}
       data-cursor="interactive"
+      onMouseEnter={() => soundManager.playHover()}
+      onClick={() => soundManager.playClick()}
       className={`group flex h-full flex-col rounded-2xl p-6 sm:p-7 ${glassCard}`}
     >
       <div className="mb-6 flex items-start justify-between gap-4">

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { glassPanel } from '../lib/glass'
+import { soundManager } from '../lib/sound'
+import SoundToggle from './SoundToggle'
 
 const navLinks = [
   { href: '#home',     label: 'Home'     },
@@ -39,6 +41,8 @@ export default function Navbar() {
         <a
           href="#home"
           data-cursor="interactive"
+          onClick={() => soundManager.playNav()}
+          onMouseEnter={() => soundManager.playHover()}
           className="font-display text-sm font-bold tracking-[0.2em] uppercase
             bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent
             drop-shadow-[0_0_12px_rgba(6,182,212,0.4)]"
@@ -47,21 +51,25 @@ export default function Navbar() {
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               data-cursor="interactive"
+              onClick={() => soundManager.playNav()}
+              onMouseEnter={() => soundManager.playHover()}
               className="text-sm text-muted transition hover:text-accent font-mono tracking-wider"
             >
               {link.label}
             </a>
           ))}
+          <SoundToggle />
         </nav>
 
-        {/* Mobile hamburger */}
-        <div className="md:hidden">
+        {/* Mobile controls */}
+        <div className="flex items-center gap-3 md:hidden">
+          <SoundToggle />
           <button
             type="button"
             data-cursor="interactive"
@@ -69,7 +77,10 @@ export default function Navbar() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              soundManager.playClick()
+              setOpen((v) => !v)
+            }}
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -89,7 +100,10 @@ export default function Navbar() {
                   href={link.href}
                   data-cursor="interactive"
                   className="block py-1 text-sm text-muted hover:text-accent font-mono"
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    soundManager.playNav()
+                    setOpen(false)
+                  }}
                 >
                   {link.label}
                 </a>
