@@ -11,6 +11,8 @@ import type { LucideIcon } from 'lucide-react'
 import { motion, type Variants } from 'framer-motion'
 import { techStack } from '../data/tech'
 import { glassCard, glassChip } from '../lib/glass'
+import { soundManager } from '../lib/sound'
+import SpotlightCard from './SpotlightCard'
 
 const iconMap: Record<string, LucideIcon> = {
   Flutter: Smartphone,
@@ -77,25 +79,29 @@ export default function TechStack() {
           {techStack.map((tech) => {
             const Icon = iconMap[tech.name] ?? Code2
             return (
-              <motion.li
-                key={tech.name}
-                variants={item}
-                whileHover={{
-                  scale: 1.04,
-                  transition: { type: 'spring', stiffness: 360, damping: 22 },
-                }}
-                data-cursor="interactive"
-                className={`group rounded-xl p-4 ${glassCard}`}
-              >
-                <div
-                  className={`mb-4 flex h-10 w-10 items-center justify-center rounded-lg text-accent ${glassChip}`}
+              <motion.li key={tech.name} variants={item}>
+                <SpotlightCard
+                  whileHover={{
+                    scale: 1.04,
+                    transition: { type: 'spring', stiffness: 360, damping: 22 },
+                  }}
+                  data-cursor="interactive"
+                  onMouseEnter={() => soundManager.playHover()}
+                  onClick={() => soundManager.playClick()}
+                  className={`group p-4 ${glassCard}`}
                 >
-                  <Icon className="h-5 w-5" aria-hidden />
-                </div>
-                <h3 className="font-display text-base font-semibold text-ink">{tech.name}</h3>
-                <p className="mt-1 text-xs tracking-wide text-muted uppercase">
-                  {tech.category}
-                </p>
+                  <div
+                    className={`mb-4 flex h-10 w-10 items-center justify-center rounded-lg text-accent transition-all duration-300 group-hover:text-cyan-300 group-hover:border-cyan-400/40 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.4)] ${glassChip}`}
+                  >
+                    <Icon className="h-5 w-5" aria-hidden />
+                  </div>
+                  <h3 className="font-display text-base font-semibold text-ink group-hover:text-cyan-300 transition-colors duration-200">
+                    {tech.name}
+                  </h3>
+                  <p className="mt-1 text-xs tracking-wide text-muted uppercase">
+                    {tech.category}
+                  </p>
+                </SpotlightCard>
               </motion.li>
             )
           })}
