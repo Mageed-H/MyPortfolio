@@ -1,53 +1,67 @@
-﻿# Cinematic Upgrade Plan — MyPortfolio
+# Cinematic Upgrade Plan — MyPortfolio
 
 خطة تطوير الموقع لمستوى سينمائي متكامل، مرتبة حسب الأولوية والتأثير.
 
 ---
 
-## [1] Loading Screen — Boot Sequence  STATUS: PENDING
-الوصف: شاشة تحميل تظهر عند أول زيارة تشبه boot sequence لنظام سيبراني.
-النص:
-  Initializing system...
-  Loading modules... [████████░░] 80%
-  Establishing secure connection...
-  Portfolio v1.0 — Ready.
-ثم تختفي بـ animation وتكشف الـ Hero.
-التقنية: React state في App.tsx + Framer Motion exit animation
-التأثير: عالي جداً | الجهد: منخفض
+## 🟢 المرحلة الأولى — ما تم إنجازه (Phase 1: Completed)
+
+### [1] Loading Screen — Boot Sequence  STATUS: COMPLETED ✅
+- **الوصف:** شاشة تحميل عند أول زيارة تحاكي إقلاع نظام سيبراني بنصوص تسلسلية وشريط تقدم ASCII.
+- **الحالة:** تم التنفيذ والرفع.
+
+### [2] Cursor Trail — Spark Particles  STATUS: COMPLETED ✅
+- **الوصف:** شرارات مضيئة بلون Cyan/Emerald تتبع الماوس وتتلاشى بنعومة باستخدام Canvas 2D.
+- **الحالة:** تم التنفيذ والرفع.
+
+### [3] Glitch Text Effect  STATUS: REMOVED ❌
+- **الوصف:** تم حذفه واستبداله بعنوان نقي احترافي متدرج ثابت بناءً على طلب المستخدم.
+
+### [4] Section Side Labels  STATUS: COMPLETED ✅
+- **الوصف:** مؤشر جانبي ثابت على الشاشات الكبيرة يوضح رقم واسم القسم الحالي مع متابعة دقيقة للسكرول.
+- **الحالة:** تم التنفيذ والرفع.
+
+### [5] Horizontal Scroll & Mobile Performance  STATUS: COMPLETED ✅
+- **الوصف:** سكرول أفقي سينمائي لقسم المشاريع على الديسكتوب، مع تحويله إلى كروت رأسية فائقة السلاسة (60fps) على الموبايل وإلغاء استهلاك الـ GPU الزائد.
+- **الحالة:** تم التنفيذ والرفع.
 
 ---
 
-## [2] Cursor Trail — Spark Particles  STATUS: PENDING
-الوصف: الماوس يترك خلفه جسيمات صغيرة تتلاشى مثل الشرارات بلون Cyan/Emerald.
-التقنية: Canvas 2D overlay فوق الصفحة، requestAnimationFrame خفيف
-التأثير: عالي جداً | الجهد: متوسط
+## 🟡 المرحلة الثانية — أفكار سينمائية مقترحة (Phase 2: Proposed Ideas)
+
+### [6] Cyber Web Audio & Sound Equalizer (أصوات تفاعلية سيبرانية)
+- **الوصف:** زر أنيق في النافبار بمخطط صوتي متذبذب (Soundwave Bars). عند التفعيل، تصدر أصوات Synth خفيفة وهادئة عند النقر أو التنقل بين الأقسام.
+- **التقنية:** Web Audio API نقي من المتصفح (Zero External Audio Files / Zero Delay).
+- **التأثير:** عالي جداً — يضيف بعداً حسياً يضاعف الإحساس بالفخامة.
+
+### [7] Spotlight / Torch Hover Effect (كشاف الماوس على البطاقات)
+- **الوصف:** توهج شعاعي خافت وناعم جداً يتبع إحداثيات الماوس داخل كروت المشاريع والتقنيات، ليكشف الحواف وتفاصيل الزجاج الداخلي (على طراز Linear و Vercel).
+- **التقنية:** CSS Radial Gradient dynamic mouse positioning.
+- **التأثير:** عالي — لمسة تفاعلية متطورة بدون أي تأثير على الأداء.
+
+### [8] Sci-Fi Military HUD Decals (مؤشرات نظام عسكري سيبراني)
+- **الوصف:** كتابات هادئة وصغيرة شبه شفافة في زوايا الموقع أو أسفل النافبار تعطي طابع غرفة عمليات تقنية:
+  `[ SYS.LOC: BAGHDAD // STATUS: OPERATIONAL // LAT: 12ms // COORD: 33.3152° N ]`
+- **التقنية:** Pure HTML/Tailwind.
+- **التأثير:** ممتاز — يعزز هوية الموقع كـ Hacker / Cyber OS.
+
+### [9] Global Laser Scroll Progress Line (شريط الليزر العلوي لتقدم الصفحة)
+- **الوصف:** خط ليزري نحيف جداً (1.5px) متوهج بلون Cyan في أعلى الصفحة بالكامل يمتد بنعومة مع تقدم القراءة أثناء النزول.
+- **التقنية:** Framer Motion `useScroll` transform.
+- **التأثير:** جميل وعملي وسينمائي.
+
+### [10] Ghost Watermark Typography (أرقام الأقسام العملاقة الشفافة)
+- **الوصف:** أرقام ضخمة وشبه شفافة في خلفية كل قسم (`01`, `02`, `03`, `04`) تتمركز خلف المحتوى، مما يمنح الصفحة عمقاً بصرياً وثلاثي الأبعاد للطبقات.
+- **التقنية:** Tailwind Typography with extreme low opacity.
+- **التأثير:** يمنح طابع مواقع المعارض العالمية (Awwwards).
+
+### [11] Project Deep-Dive Modal / Drawer (نافذة تفاصيل معمارية المشاريع)
+- **الوصف:** عند النقر على أي بطاقة مشروع، تنفتح نافذة زجاجية داكنة تعرض المعمارية البرمجية للمشروع (System Architecture)، المخططات، والتقنيات بالتفصيل قبل الانتقال إلى الرابط المباشر.
+- **التقنية:** React Portal + Framer Motion Spring Modal.
+- **التأثير:** عالي جداً ويثبت الخبرة الهندسية في بناء الـ Backend و Cross-platform.
 
 ---
 
-## [3] Glitch Text Effect  STATUS: PENDING
-الوصف: العنوان الرئيسي يمر بـ glitch effect عشوائي كل 5-8 ثوانٍ.
-التقنية: CSS animation + JS random char replacement
-التأثير: عالي | الجهد: منخفض
-
----
-
-## [4] Section Side Labels  STATUS: PENDING
-الوصف: شريط رأسي ثابت على يسار الشاشة يعرض رقم ولقب القسم الحالي.
-مثال: [ 01 — HERO ] / [ 02 — TECH ] / [ 03 — PROJECTS ]
-يتغير تلقائياً مع الـ scroll.
-التقنية: IntersectionObserver + Framer Motion
-التأثير: عالي | الجهد: منخفض
-
----
-
-## [5] Horizontal Scroll — Projects Section  STATUS: PENDING
-الوصف: قسم المشاريع يتحرك أفقياً أثناء الـ scroll العمودي — cinematic reel.
-التقنية: useScroll + useTransform من Framer Motion
-التأثير: عالي جداً | الجهد: عالي
-
----
-
-## ملاحظات
-- كل مرحلة تختبر بـ: npx tsc -b && npm run build قبل الـ commit
-- كل مرحلة ترفع على GitHub بـ commit منفرد وواضح
-- الأداء أولوية — لا يضاف ثقل غير ضروري
+## 📌 معايير التنفيذ
+- استمرار فحص البناء والأخطاء البرمجية: `npx tsc -b && npm run build` قبل أي commit.
+- الحفاظ على سلاسة الـ 60FPS المطلقة على الموبايل بدون أي تنازل.
