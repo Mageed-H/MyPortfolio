@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import ScrollCanvas from './components/ScrollCanvas'
 import LoadingScreen from './components/LoadingScreen'
 import SectionSidebar from './components/SectionSidebar'
+import HudOverlay from './components/HudOverlay'
 import { ThemeProvider } from './context/ThemeContext'
 
 const PageContent = lazy(() => import('./components/PageContent'))
@@ -28,6 +29,7 @@ export default function App() {
         style={{ visibility: loading ? 'hidden' : 'visible' }}
       >
         <SectionSidebar />
+        <HudOverlay />
         <ScrollCanvas />
         <AnimatedBackground />
         <Navbar />
